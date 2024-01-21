@@ -96,11 +96,43 @@ int evaluateExpression(const char *expr)
     return numbers[0];
 }
 
+int checkBrackets(const char *expr)
+{
+    int count = 0;
+    for (int i = 0; expr[i]; ++i)
+    {
+        if (expr[i] == '(')
+        {
+            ++count;
+        }
+        else if (expr[i] == ')')
+        {
+            --count;
+        }
+        if (count < 0)
+        {
+            return 0; // 发现一个右括号，但没有相应的左括号与之配对
+        }
+    }
+    return count == 0; // 如果所有的括号都正确配对，那么count应该为0
+}
+
 int main()
 {
     char expr[128];
+
     printf("请输入算式：\n");
+
     fgets(expr, 128, stdin);
+
+    if (!checkBrackets(expr))
+    {
+        printf("错误：括号没有正确配对。\n");
+        return 1;
+    }
+    
     printf("结果是：%d\n", evaluateExpression(expr));
+
     return 0;
+
 }
