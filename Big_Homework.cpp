@@ -96,6 +96,7 @@ int evaluateExpression(const char *expr)
     return numbers[0];
 }
 
+// 检查括号是否配对正确
 int checkBrackets(const char *expr)
 {
     int count = 0;
@@ -130,9 +131,8 @@ int main()
         printf("错误：括号没有正确配对。\n");
         return 1;
     }
-    
+
     printf("结果是：%d\n", evaluateExpression(expr));
 
     return 0;
-
 }
