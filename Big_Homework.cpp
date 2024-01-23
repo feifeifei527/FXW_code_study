@@ -13,6 +13,17 @@ int isOperator(char c)
     return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
+// 乘除的优先级大于加减
+int getPriority(char op)
+{
+    if (op == '*' || op == '/')
+        return 2;
+    else if (op == '+' || op == '-')
+        return 1;
+    else
+        return 0;
+}
+
 // 执行运算
 int calculate(int num1, int num2, char op)
 {
@@ -74,8 +85,9 @@ int evaluateExpression(const char *expr)
 
         else if (isOperator(expr[i])) // 当遇到运算符时，开始执行循环，直到运算符栈为空或者栈顶的运算符不是运算符。
         {
-            while (operatorsTop != -1 && isOperator(operators[operatorsTop]))
+            while (operatorsTop != -1 && isOperator(operators[operatorsTop]) && getPriority(operators[operatorsTop]) >= getPriority(expr[i]))
             {
+
                 int num2 = numbers[numbersTop--];
                 int num1 = numbers[numbersTop--];
                 char op = operators[operatorsTop--];
